@@ -331,7 +331,7 @@ Specific permissions are required to have the ability to maintain models in the 
 
 1. In the [Azure portal](https://portal.azure.com), open the resource group you created for this lab.
 
-2. Select the Azure Digital Twins service from the list named **{PREFIX}digtwins**, where `PREFIX` is the generated value or the prefix you specified in the **Before the HOL** steps.
+2. Select the Azure Digital Twins service from the list named **digtwins<inject key="DeploymentID" /**.
 
     ![The resource group service listing displays with the Azure Digital Twins service selected.](media/resourcegrouplist_digitaltwins.png "Resource group service listing")
 
