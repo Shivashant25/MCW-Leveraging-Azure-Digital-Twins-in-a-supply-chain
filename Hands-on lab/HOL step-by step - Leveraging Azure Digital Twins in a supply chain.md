@@ -737,7 +737,7 @@ The capability of querying digital twins either via CLI or via the Azure Digital
 
 1. In the [Azure Portal](https://portal.azure.com), select the lab resource group.
 
-2. In the list of resources, select the **{PREFIX}tsi** Time Series Insights environment resource.
+2. In the list of resources, select the **tsi<inject key="DeploymentID" />** Time Series Insights environment resource.
 
 3. From the left menu, select **Data Access Policies** from beneath the **Settings** section.
 
