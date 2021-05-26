@@ -613,15 +613,15 @@ We will be using a Logic App to simulate shipment ETA information being updated 
 
    - In the [Azure Portal](https://portal.azure.com), open the lab resource group.
 
-   - Select the Azure Digital Twins service resource **{PREFIX}digtwins**.
+   - Select the Azure Digital Twins service resource **digtwins<inject key="DeploymentID" />**.
 
    - From the left menu, select **Access control (IAM)**.
 
    - Expand the **+ Add** button menu and select **Add role assignment**.
 
-   - In the **Add role assignment** blade, select **Azure Digital Twins Data Owner** as the role. In the search box, search for and select your logic app name **{PREFIX}ShipmentArrivalTimeUpdateApp**. Select **Save**.
+   - In the **Add role assignment** blade, select **Azure Digital Twins Data Owner** as the role. In the search box, search for and select your logic app name **ShipmentArrivalTimeUpdateApp<inject key="DeploymentID" />**. Select **Save**.
 
-2. Let's review the Logic application. In the [Azure Portal](https://portal.azure.com), open the lab resource group. Select the **Logic app** resource named **{PREFIX}ShipmentArrivalTimeUpdateApp**.
+2. Let's review the Logic application. In the [Azure Portal](https://portal.azure.com), open the lab resource group. Select the **Logic app** resource named **ShipmentArrivalTimeUpdateApp<inject key="DeploymentID" />**.
 
 3. On the **Overview** screen of the Logic app, ensure the app is **Enabled**. If you see **Enable** in the toolbar menu, select it.
 
@@ -641,7 +641,7 @@ We will be using a Logic App to simulate shipment ETA information being updated 
 
 The best way to update device twin information is to base it on live data being ingested directly from the environment in real-time. In this task, we will setup an event grid subscription to feed an Azure Function that will then process the incoming messages and update digital twins accordingly.
 
-1. In the [Azure portal](https://portal.azure.com), open the lab resource group and select the **IoT Hub** resource (**{PREFIX}iothub**).
+1. In the [Azure portal](https://portal.azure.com), open the lab resource group and select the **IoT Hub** resource (**iothub<inject key="DeploymentID" />**).
 
 2. From the left menu, select **Events**.
 
@@ -656,7 +656,7 @@ The best way to update device twin information is to base it on live data being 
     | System Topic Name | IoTHubToTwinsTopic |
     | Filter to Event Types | Ensure only **Device Telemetry** is selected. |
     | Endpoint Type | Azure Function |
-    | Endpoint | Select the **Select an endpoint** link. Ensure the Function App **{PREFIX}DTFunctions** is selected, and choose the **IoTHubToTwins** function, then **Confirm Selection**. |
+    | Endpoint | Select the **Select an endpoint** link. Ensure the Function App **DTFunctions<inject key="DeploymentID" />** is selected, and choose the **IoTHubToTwins** function, then **Confirm Selection**. |
 
     ![The Select Azure Function form is displayed with the fields populated as described in the preceding table.](media/iothub_createeventsub_functionselection.png "Select Azure Function form")
 
@@ -684,7 +684,7 @@ The best way to update device twin information is to base it on live data being 
         az dt route create -g RESOURCE_GROUP_NAME --dt-name DIGITAL_TWINS_INSTANCE_NAME --endpoint-name DTEndpoint --route-name DTRoute
         ```
 
-   - In the Azure portal, open the lab resource group and select the **{PREFIX}EventGrid** Event Grid Topic resource.
+   - In the Azure portal, open the lab resource group and select the **EventGrid<inject key="DeploymentID" />** Event Grid Topic resource.
 
    - Select **+ Event Subscription** from the top toolbar menu.
 
@@ -695,7 +695,7 @@ The best way to update device twin information is to base it on live data being 
         | Name | DTToSignalR |
         | Event Schema | Event Grid Schema |
         | Endpoint Type | Azure Function |
-        | Endpoint | Select the **Select an endpoint** link, then choose the **{PREFIX}DTFunctions** Function app. For the Function, select the **broadcast** function. Select **Confirm Selection**. |
+        | Endpoint | Select the **Select an endpoint** link, then choose the **DTFunctions<inject key="DeploymentID" />** Function app. For the Function, select the **broadcast** function. Select **Confirm Selection**. |
 
     >**Note**: Because we are running the Azure Digital Twins Explorer locally, we are not able to leverage the SignalR hub. Alternatively, you could follow guidance on deploying the Azure Digital Twins Explorer as a cloud service and configure it to receive updates from SignalR. You can find this guidance on the [Azure Digital Twins Explorer repository](https://github.com/Azure-Samples/digital-twins-explorer#advanced).
 
@@ -759,7 +759,7 @@ The capability of querying digital twins either via CLI or via the Azure Digital
     az dt route create -g RESOURCE_GROUP_NAME -n DIGITAL_TWINS_INSTANCE_NAME --endpoint-name EventHubEndpoint --route-name EventHubRoute --filter "type = 'Microsoft.DigitalTwins.Twin.Update'"
     ```
 
-2. Establishing this route will provide data into an event hub located in the **{PREFIX}eventhubnamespaces** resource of the lab resource group. This event hub (**tsieventhub**) exposes a **tsi-preview** consumer group which is used as the Event Source of the Time Series Insights environment.
+2. Establishing this route will provide data into an event hub located in the **eventhubnamespaces<inject key="DeploymentID" />** resource of the lab resource group. This event hub (**tsieventhub**) exposes a **tsi-preview** consumer group which is used as the Event Source of the Time Series Insights environment.
 
 ### Task 3: View incoming telemetry using Time Series Insights
 
@@ -767,7 +767,7 @@ The capability of querying digital twins either via CLI or via the Azure Digital
 
 2. In the [Azure Portal](https://portal.azure.com), select the lab resource group.
 
-3. In the list of resources, select the **{PREFIX}tsi** Time Series Insights environment resource.
+3. In the list of resources, select the **tsi<inject key="DeploymentID" />** Time Series Insights environment resource.
 
 4. Select **Event Sources** from the left menu, and observe the **HubInput** details that are pointing to the **tsieventhub** using the **tsi-preview** consumer group.
 
