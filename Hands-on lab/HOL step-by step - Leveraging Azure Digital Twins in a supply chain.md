@@ -447,7 +447,7 @@ Now that we've modeled the entities in our environment, we are ready to create d
 
 ### Task 1: Create digital twin instances using the CLI
 
-1. Return to your CLI command prompt window.
+1. Leave the existing CLI Command Prompt window as it. Open a new CLI Command Prompt window and naviagte back to `client/src` folder.
 
 2. The first storeroom that we will define has the identifier of **SR90636**. To create this digital twin instance, execute the following CLI command (replace RESOURCE_GROUP_NAME with the name of the lab resource group and ADT_INSTANCE_NAME with your Azure Digital Twins instance name):
   
