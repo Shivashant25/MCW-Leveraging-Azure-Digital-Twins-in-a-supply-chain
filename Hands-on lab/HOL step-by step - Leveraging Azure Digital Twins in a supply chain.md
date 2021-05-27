@@ -331,7 +331,7 @@ Specific permissions are required to have the ability to maintain models in the 
 
 1. In the [Azure portal](https://portal.azure.com), open the resource group you created for this lab.
 
-2. Select the Azure Digital Twins service from the list named **{PREFIX}digtwins**, where `PREFIX` is the generated value or the prefix you specified in the **Before the HOL** steps.
+2. Select the Azure Digital Twins service from the list named **digtwins<inject key="DeploymentID" />**.
 
     ![The resource group service listing displays with the Azure Digital Twins service selected.](media/resourcegrouplist_digitaltwins.png "Resource group service listing")
 
@@ -349,7 +349,7 @@ Azure Digital Twins has a command set for the Azure CLI that you can use to perf
 
 1. In the [Azure portal](https://portal.azure.com), open the resource group you created for this lab.
 
-2. Select the **Azure Digital Twins** service from the list named **{PREFIX}digtwins**, where `PREFIX` is the generated value or the prefix you specified in the **Before the HOL** steps.
+2. Select the **Azure Digital Twins** service from the list named **digtwins<inject key="DeploymentID" />**.
 
     ![The resource group service listing displays with the Azure Digital Twins service selected.](media/resourcegrouplist_digitaltwins.png "Resource group service listing")
 
@@ -399,11 +399,21 @@ Azure Digital Twins has a command set for the Azure CLI that you can use to perf
 
 The Azure Digital Twins Explorer is a Node.js-based single-page web application that you will run on your computer. This application connects to an Azure Digital Twins instance and provides features to manage models and twins instances (along with their properties). Azure Digital Twins Explorer provides visualizations of the twins graph, editing twin instance properties and running queries across the twins graph.
 
-1. In a new tab or web browser window, visit the [Azure Digital Twins Explorer GitHub repository](https://github.com/Azure-Samples/digital-twins-explorer/tree/main/).
+1. When running locally, Azure Digital Twins Explorer will use Azure default credentials. In order to authenticate, you can run, for example, **az login** in any command prompt. When you later run Azure Digital Twins Explorer, it will pick up the credentials. Alternatively, you can sign into Visual Studio Code.
+ 
+2. Select the **Download ZIP** button to download a .zip file of this sample code to your machine. Unzip the **digital-twins-explorer-<branch>.zip** folder, and extract the files. Alternatively, you can clone the repository.
+  
+3. From a command prompt in the `client/src` folder, run `npm install`. This will retrieve all dependencies
+    >**IMPORTANT!** Due to a dependency on the `npm-force-resolutions` package to mitigate an underlying security issue you will not be able to install under any path that contains a space. For more information, see this GitHub [issue](https://github.com/rogeriochaves/npm-force-resolutions/issues/17).
+  
+4. From the same command prompt, run `npm run start`.
+    > By default, the app runs on port 3000. To customize the port, change the run command. For example, to use port 8080:
+    >  * Linux/Mac (Bash): `PORT=8080 npm run start`
+    >  * Windows (cmd): `set PORT=8080 && npm run start`
+    > Note: Your Azure Digital Twins app registration must have a reply URL using the same port you are using - e.g. localhost:7000 if that is the port you are using.
+5. Your browser should open and the app should appear.
 
-2. Follow the steps in the [**Getting Started** -> Running digital-twins-explorer locally](https://github.com/Azure-Samples/digital-twins-explorer/tree/main/#running-digital-twins-explorer-locally) section of this page, beginning with step 2 (we already have an Azure Digital Twins service instance) to step 6.
-
-3. With the Azure Digital Twins Explorer application running locally, the web application will display a modal window where you will enter the host name value for your Azure Digital Twins service instance. Be sure to pre-pend the host name value with **https://**, then select **Save**.
+6. With the Azure Digital Twins Explorer application running locally, the web application will display a modal window where you will enter the host name value for your Azure Digital Twins service instance. Be sure to pre-pend the host name value with **https://**, then select **Save**.
 
    ![A modal window is displayed prompting for the host name URL of the Azure Digital Twins service instance.](media/adtexplorer_hostnameentry.png "Azure Digital Twins Explorer Host Name Entry")
 
@@ -437,7 +447,7 @@ Now that we've modeled the entities in our environment, we are ready to create d
 
 ### Task 1: Create digital twin instances using the CLI
 
-1. Return to your CLI command prompt window.
+1. Leave the existing CLI Command Prompt window as it. Open a new CLI Command Prompt window and naviagte back to `client/src` folder.
 
 2. The first storeroom that we will define has the identifier of **SR90636**. To create this digital twin instance, execute the following CLI command (replace RESOURCE_GROUP_NAME with the name of the lab resource group and ADT_INSTANCE_NAME with your Azure Digital Twins instance name):
   
@@ -613,15 +623,15 @@ We will be using a Logic App to simulate shipment ETA information being updated 
 
    - In the [Azure Portal](https://portal.azure.com), open the lab resource group.
 
-   - Select the Azure Digital Twins service resource **{PREFIX}digtwins**.
+   - Select the Azure Digital Twins service resource **digtwins<inject key="DeploymentID" />**.
 
    - From the left menu, select **Access control (IAM)**.
 
    - Expand the **+ Add** button menu and select **Add role assignment**.
 
-   - In the **Add role assignment** blade, select **Azure Digital Twins Data Owner** as the role. In the search box, search for and select your logic app name **{PREFIX}ShipmentArrivalTimeUpdateApp**. Select **Save**.
+   - In the **Add role assignment** blade, select **Azure Digital Twins Data Owner** as the role. In the search box, search for and select your logic app name **ShipmentArrivalTimeUpdateApp<inject key="DeploymentID" />**. Select **Save**.
 
-2. Let's review the Logic application. In the [Azure Portal](https://portal.azure.com), open the lab resource group. Select the **Logic app** resource named **{PREFIX}ShipmentArrivalTimeUpdateApp**.
+2. Let's review the Logic application. In the [Azure Portal](https://portal.azure.com), open the lab resource group. Select the **Logic app** resource named **ShipmentArrivalTimeUpdateApp<inject key="DeploymentID" />**.
 
 3. On the **Overview** screen of the Logic app, ensure the app is **Enabled**. If you see **Enable** in the toolbar menu, select it.
 
@@ -641,7 +651,7 @@ We will be using a Logic App to simulate shipment ETA information being updated 
 
 The best way to update device twin information is to base it on live data being ingested directly from the environment in real-time. In this task, we will setup an event grid subscription to feed an Azure Function that will then process the incoming messages and update digital twins accordingly.
 
-1. In the [Azure portal](https://portal.azure.com), open the lab resource group and select the **IoT Hub** resource (**{PREFIX}iothub**).
+1. In the [Azure portal](https://portal.azure.com), open the lab resource group and select the **IoT Hub** resource (**iothub<inject key="DeploymentID" />**).
 
 2. From the left menu, select **Events**.
 
@@ -656,7 +666,7 @@ The best way to update device twin information is to base it on live data being 
     | System Topic Name | IoTHubToTwinsTopic |
     | Filter to Event Types | Ensure only **Device Telemetry** is selected. |
     | Endpoint Type | Azure Function |
-    | Endpoint | Select the **Select an endpoint** link. Ensure the Function App **{PREFIX}DTFunctions** is selected, and choose the **IoTHubToTwins** function, then **Confirm Selection**. |
+    | Endpoint | Select the **Select an endpoint** link. Ensure the Function App **DTFunctions<inject key="DeploymentID" />** is selected, and choose the **IoTHubToTwins** function, then **Confirm Selection**. |
 
     ![The Select Azure Function form is displayed with the fields populated as described in the preceding table.](media/iothub_createeventsub_functionselection.png "Select Azure Function form")
 
@@ -684,7 +694,7 @@ The best way to update device twin information is to base it on live data being 
         az dt route create -g RESOURCE_GROUP_NAME --dt-name DIGITAL_TWINS_INSTANCE_NAME --endpoint-name DTEndpoint --route-name DTRoute
         ```
 
-   - In the Azure portal, open the lab resource group and select the **{PREFIX}EventGrid** Event Grid Topic resource.
+   - In the Azure portal, open the lab resource group and select the **EventGrid<inject key="DeploymentID" />** Event Grid Topic resource.
 
    - Select **+ Event Subscription** from the top toolbar menu.
 
@@ -695,7 +705,7 @@ The best way to update device twin information is to base it on live data being 
         | Name | DTToSignalR |
         | Event Schema | Event Grid Schema |
         | Endpoint Type | Azure Function |
-        | Endpoint | Select the **Select an endpoint** link, then choose the **{PREFIX}DTFunctions** Function app. For the Function, select the **broadcast** function. Select **Confirm Selection**. |
+        | Endpoint | Select the **Select an endpoint** link, then choose the **DTFunctions<inject key="DeploymentID" />** Function app. For the Function, select the **broadcast** function. Select **Confirm Selection**. |
 
     >**Note**: Because we are running the Azure Digital Twins Explorer locally, we are not able to leverage the SignalR hub. Alternatively, you could follow guidance on deploying the Azure Digital Twins Explorer as a cloud service and configure it to receive updates from SignalR. You can find this guidance on the [Azure Digital Twins Explorer repository](https://github.com/Azure-Samples/digital-twins-explorer#advanced).
 
@@ -737,7 +747,7 @@ The capability of querying digital twins either via CLI or via the Azure Digital
 
 1. In the [Azure Portal](https://portal.azure.com), select the lab resource group.
 
-2. In the list of resources, select the **{PREFIX}tsi** Time Series Insights environment resource.
+2. In the list of resources, select the **tsi<inject key="DeploymentID" />** Time Series Insights environment resource.
 
 3. From the left menu, select **Data Access Policies** from beneath the **Settings** section.
 
@@ -759,7 +769,7 @@ The capability of querying digital twins either via CLI or via the Azure Digital
     az dt route create -g RESOURCE_GROUP_NAME -n DIGITAL_TWINS_INSTANCE_NAME --endpoint-name EventHubEndpoint --route-name EventHubRoute --filter "type = 'Microsoft.DigitalTwins.Twin.Update'"
     ```
 
-2. Establishing this route will provide data into an event hub located in the **{PREFIX}eventhubnamespaces** resource of the lab resource group. This event hub (**tsieventhub**) exposes a **tsi-preview** consumer group which is used as the Event Source of the Time Series Insights environment.
+2. Establishing this route will provide data into an event hub located in the **eventhubnamespaces<inject key="DeploymentID" />** resource of the lab resource group. This event hub (**tsieventhub**) exposes a **tsi-preview** consumer group which is used as the Event Source of the Time Series Insights environment.
 
 ### Task 3: View incoming telemetry using Time Series Insights
 
@@ -767,7 +777,7 @@ The capability of querying digital twins either via CLI or via the Azure Digital
 
 2. In the [Azure Portal](https://portal.azure.com), select the lab resource group.
 
-3. In the list of resources, select the **{PREFIX}tsi** Time Series Insights environment resource.
+3. In the list of resources, select the **tsi<inject key="DeploymentID" />** Time Series Insights environment resource.
 
 4. Select **Event Sources** from the left menu, and observe the **HubInput** details that are pointing to the **tsieventhub** using the **tsi-preview** consumer group.
 
