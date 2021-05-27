@@ -287,35 +287,31 @@ In the previous task, we created a model definition of a storeroom manually. In 
 
 It is recommended that you validate your DTDL models offline prior to loading them into the Azure Digital Twins service. We will validate our model definitions using the [DTDL validator](https://github.com/Azure-Samples/DTDL-Validator/tree/master/) to run validation on the models folder.
 
-1. In a new browser tab or window, access the [DTDL Validator code sample](https://docs.microsoft.com/en-us/samples/azure-samples/dtdl-validator/dtdl-validator/) webpage.
+1. DTDL Validator code sample file is present in the Labfiles.
 
-2. Select the **Download ZIP** button.
+2. Using Visual Studio Code, open the DTDL validator folder located in the `C:\LabFiles\DTDL_Validator` path.
 
-3. Extract the contents of the downloaded ZIP file to the location of your choice. For example, I've extracted mine to `C:\SourceCode\DTDL_Validator`.
-
-4. Using Visual Studio Code, open the folder where you extracted the files.
-
-5. If you are prompted with notifications about missing assets and unresolved dependencies, select **Yes** and **Restore**.
+3. If you are prompted with notifications about missing assets and unresolved dependencies, select **Yes** and **Restore**.
 
     ![Two Visual Studio notifications are shown indicating the required assets to build and debug are missing from the Validator project as well as a notification indicating there are unresolved dependencies.](media/validatorprojectdependencieswarning.png "Visual Studio Code notifications")
 
-6. Open a terminal window by selecting **View > Terminal** from the Visual Studio Code menu.
+4. Open a terminal window by selecting **View > Terminal** from the Visual Studio Code menu.
 
-7. In the terminal, navigate to the application directory by executing the following command:
+5. In the terminal, navigate to the application directory by executing the following command:
 
    ```Bash
    cd .\DTDLValidator-Sample\DTDLValidator\
    ```
 
-8. Copy the full path to the **models** folder of this lab (`Hands-on lab/Resources/models`) to a text editor for use in the next step.
+6. Copy the full path to the **models** folder of this lab (`Hands-on lab/Resources/models`) to a text editor for use in the next step.
 
-9. In the Visual Studio Code terminal window, execute the following command (replacing **MODEL_FOLDER_PATH** with the full path to your models folder copied in the previous step, keeping the quote characters intact):
+7. In the Visual Studio Code terminal window, execute the following command (replacing **MODEL_FOLDER_PATH** with the full path to your models folder copied in the previous step, keeping the quote characters intact):
 
     ```Bash
     dotnet run -d "MODEL_FOLDER_PATH"
     ```
 
-10. You should get a message indicating that all files in the **models** folder are valid.
+8. You should get a message indicating that all files in the **models** folder are valid.
 
   ![A portion of the Visual Studio Code terminal window displays with a message indicating that all files have been validated and that the DTDL is valid.](media/validationtoolresults.png "Visual Studio Code Terminal Window Output")
 
@@ -400,10 +396,10 @@ Azure Digital Twins has a command set for the Azure CLI that you can use to perf
 The Azure Digital Twins Explorer is a Node.js-based single-page web application that you will run on your computer. This application connects to an Azure Digital Twins instance and provides features to manage models and twins instances (along with their properties). Azure Digital Twins Explorer provides visualizations of the twins graph, editing twin instance properties and running queries across the twins graph.
 
 1. When running locally, Azure Digital Twins Explorer will use Azure default credentials. In order to authenticate, you can run, for example, **az login** in any command prompt. When you later run Azure Digital Twins Explorer, it will pick up the credentials. Alternatively, you can sign into Visual Studio Code.
- 
-2. Select the **Download ZIP** button to download a .zip file of this sample code to your machine. Unzip the **digital-twins-explorer-<branch>.zip** folder, and extract the files. Alternatively, you can clone the repository.
-  
-3. From a command prompt in the `client/src` folder, run `npm install`. This will retrieve all dependencies
+
+2. The sample code file is present in the `C:\LabFiles` path as 'digital-twins-explorer-main'.
+
+3. From a command prompt, run `cd C:\LabFiles\digital-twins-explorer-main\digital-twins-explorer-main\client\src` folder, run `npm install`. This will retrieve all dependencies
     >**IMPORTANT!** Due to a dependency on the `npm-force-resolutions` package to mitigate an underlying security issue you will not be able to install under any path that contains a space. For more information, see this GitHub [issue](https://github.com/rogeriochaves/npm-force-resolutions/issues/17).
   
 4. From the same command prompt, run `npm run start`.
