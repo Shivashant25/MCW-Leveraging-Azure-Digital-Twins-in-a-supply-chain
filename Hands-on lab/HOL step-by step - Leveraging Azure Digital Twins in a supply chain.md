@@ -317,29 +317,11 @@ It is recommended that you validate your DTDL models offline prior to loading th
 
 ## Exercise 2: Loading models into Azure Digital Twins
 
-Duration: 25 minutes
+Duration: 20 minutes
 
 In the previous exercise, we learned how to author and validate DTDL models. In this exercise, we will load these models into the Azure Digital Twins Azure service.
 
-### Task 1: Configure Azure Digital Twins permissions
-
-Specific permissions are required to have the ability to maintain models in the Azure Digital Twins service. In this exercise, you will add yourself as an **Azure Digital Twins Data Owner** using role-based access control (RBAC).
-
-1. In the [Azure portal](https://portal.azure.com), open the resource group you created for this lab.
-
-2. Select the Azure Digital Twins service from the list named **digtwins<inject key="DeploymentID" />**.
-
-    ![The resource group service listing displays with the Azure Digital Twins service selected.](media/resourcegrouplist_digitaltwins.png "Resource group service listing")
-
-3. From the left menu, select **Access control (IAM)**, then expand the **+ Add** button in the toolbar and select **Add role assignment**.
-
-    ![In the Azure Digital Twins service screen, Access control (IAM) is selected from the left menu. The +Add button is expanded with the Add role assignment option highlighted.](media/digtwins_iam_menu.png "Azure Digital Twins IAM")
-
-4. In the **Add role assignment** blade, select the **Azure Digital Twins Data Owner** role, and search for and select your Azure Active Directory account (search for your login email address). Select **Save**.
-
-    ![The Add role assignment blade displays with an email in the Select field and a selected member chosen. The Save button is highlighted.](media/digtwins_addroleassignment.png "Add role assignment blade")
-
-### Task 2: Loading models using the CLI
+### Task 1: Loading models using the CLI
 
 Azure Digital Twins has a command set for the Azure CLI that you can use to perform most management functions with the service. The commands relative to digital twins are part of the larger [Azure IoT extension for Azure CLI](https://github.com/Azure/azure-iot-cli-extension). You can review the digital twins command reference here: [az dt command reference](https://docs.microsoft.com/en-us/cli/azure/dt).
 
@@ -391,7 +373,7 @@ Azure Digital Twins has a command set for the Azure CLI that you can use to perf
 
 10. Keep this CLI command window open for additional tasks later on in this lab.
 
-### Task 3: Setup the Azure Digital Twins Explorer application
+### Task 2: Setup the Azure Digital Twins Explorer application
 
 The Azure Digital Twins Explorer is a Node.js-based single-page web application that you will run on your computer. This application connects to an Azure Digital Twins instance and provides features to manage models and twins instances (along with their properties). Azure Digital Twins Explorer provides visualizations of the twins graph, editing twin instance properties and running queries across the twins graph.
 
@@ -415,7 +397,7 @@ The Azure Digital Twins Explorer is a Node.js-based single-page web application 
 
 >**Note**: Prior to running the web application from the command prompt, remember to execute the **az login** command to ensure appropriate authentication.
 
-### Task 4: Loading models using the Azure Digital Twins Explorer
+### Task 3: Loading models using the Azure Digital Twins Explorer
 
 The Azure Digital Twins Explorer provides an intuitive user interface to manage our Azure Digital Twins service instance. In this task, we will use this interface to upload the remainder of the models for our environment.
 
@@ -758,13 +740,3 @@ The capability of querying digital twins either via CLI or via the Azure Digital
     ![The resulting graph displays in the TSI canvas.](media/resulting_tsigraph.png "TSI visualization")
 
 7. Spend additional time adding additional visualizations to the Time Series Insights canvas.
-
-## After the hands-on lab
-
-Duration: 5 minutes
-
-### Task 1: Delete resource group
-
-1. In the [Azure Portal](https://portal.azure.com), delete the resource group you created for this lab.
-
-You should follow all steps provided *after* attending the Hands-on lab.
