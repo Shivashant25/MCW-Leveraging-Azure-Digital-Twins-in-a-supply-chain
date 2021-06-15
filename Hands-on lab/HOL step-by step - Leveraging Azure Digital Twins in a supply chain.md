@@ -300,7 +300,7 @@ It is recommended that you validate your DTDL models offline prior to loading th
 5. In the terminal, navigate to the application directory by executing the following command:
 
    ```Bash
-   cd .\DTDLValidator-Sample\DTDLValidator\
+   cd C:\LabFiles\DTDL_Validator\DTDLValidator-Sample\DTDLValidator
    ```
 
 6. Copy the full path to the **models** folder of this lab (`Hands-on lab/Resources/models`) to a text editor for use in the next step.
@@ -615,31 +615,19 @@ Azure Logic Apps is a cloud service that helps you automate workflows across app
 
 We will be using a Logic App to simulate shipment ETA information being updated from an ERP system. However, our Logic App runs on a timer that will randomly update the ETA for demonstration purposes.
 
-1. We will first need grant the logic app Managed Service Identity permission to communicate with the DigitalTwins resource.
+1. Let's review the Logic application. In the [Azure Portal](https://portal.azure.com), open the lab resource group. Select the **Logic app** resource named **ShipmentArrivalTimeUpdateApp<inject key="DeploymentID" />**.
 
-   - In the [Azure Portal](https://portal.azure.com), open the lab resource group.
+2. On the **Overview** screen of the Logic app, ensure the app is **Enabled**. If you see **Enable** in the toolbar menu, select it.
 
-   - Select the Azure Digital Twins service resource **digtwins<inject key="DeploymentID" />**.
+3. From the left menu, select **Logic app designer**.
 
-   - From the left menu, select **Access control (IAM)**.
-
-   - Expand the **+ Add** button menu and select **Add role assignment**.
-
-   - In the **Add role assignment** blade, select **Azure Digital Twins Data Owner** as the role. In the search box, search for and select your logic app name **ShipmentArrivalTimeUpdateApp<inject key="DeploymentID" />**. Select **Save**.
-
-2. Let's review the Logic application. In the [Azure Portal](https://portal.azure.com), open the lab resource group. Select the **Logic app** resource named **ShipmentArrivalTimeUpdateApp<inject key="DeploymentID" />**.
-
-3. On the **Overview** screen of the Logic app, ensure the app is **Enabled**. If you see **Enable** in the toolbar menu, select it.
-
-4. From the left menu, select **Logic app designer**.
-
-5. Expand each activity of the flow. The **Recurrence** activity shows the Logic app is triggered every hour. The **HTTP** activity issues a twin query to the Azure Digital Twins instance to retrieve all shipment twins. This activity feeds the **Parse JSON** activity that deserializes the result of the query. The **For each** activity then iterates through each query result and adds a random number of minutes to the **EstimatedTimeOfArrival** value of the shipment. This update also calls the Azure Digital Twins instance via HTTP.
+4. Expand each activity of the flow. The **Recurrence** activity shows the Logic app is triggered every hour. The **HTTP** activity issues a twin query to the Azure Digital Twins instance to retrieve all shipment twins. This activity feeds the **Parse JSON** activity that deserializes the result of the query. The **For each** activity then iterates through each query result and adds a random number of minutes to the **EstimatedTimeOfArrival** value of the shipment. This update also calls the Azure Digital Twins instance via HTTP.
 
     ![The Logic app designer has the first two activities expanded described by the text above.](media/logicapp_activities_expanded.png "Logic app designer")
 
     ![The Logic app designer has the last two activities expanded described by the text above.](media/logicapp_activities_expanded2.png "Logic app designer")
 
-6. From the left menu, select **Overview**, then select the **Enable** button from the top toolbar.
+5. From the left menu, select **Overview**, then select the **Enable** button from the top toolbar.
 
 > **Note**: If desired, you can choose to execute the Logic app on-demand by selecting **Run Trigger** from the **Overview** screen of the service.
 
@@ -666,23 +654,7 @@ The best way to update device twin information is to base it on live data being 
 
     ![The Select Azure Function form is displayed with the fields populated as described in the preceding table.](media/iothub_createeventsub_functionselection.png "Select Azure Function form")
 
-5. We now need to ensure the Azure Function has permission to update digital twins instances. Open the CLI command window, and enter the following command to create a managed service identity for the Azure Functions app (replace RESOURCE_GROUP_NAME and FUNCTION_APP_NAME with your values):
-
-    ```Bash
-    az functionapp identity assign -g RESOURCE_GROUP_NAME -n FUNCTION_APP_NAME
-    ```
-
-6. Record the **principalId** value from the output of the previous step.
-
-   ![Console output displays with the principalId value highlighted.](media/azurefunctions_msi_consoleoutput.png "Console output of MSI creation")
-
-7. Now, we'll assign the Azure Functions managed service identity (MSI) permissions to the Azure Digital Twins service by assigning it the **Digital Twins Data Owner** role. In the CLI command window, and issue the following command (replacing RESOURCE_GROUP_NAME, DIGITAL_TWINS_INSTANCE_NAME and PRINCIPAL_ID with your values):
-
-    ```Bash
-    az dt role-assignment create -g RESOURCE_GROUP_NAME --dt-name DIGITAL_TWINS_INSTANCE_NAME --assignee "PRINCIPAL_ID" --role "Azure Digital Twins Data Owner"
-    ```
-
-8. We will now configure our Azure Digital Twins Explorer application to register for real-time updates using SignalR. We will need to create a route from the Azure Digital Twins service to a broker Azure Function to update SignalR with the incoming data.
+5. We will now configure our Azure Digital Twins Explorer application to register for real-time updates using SignalR. We will need to create a route from the Azure Digital Twins service to a broker Azure Function to update SignalR with the incoming data.
 
    - In the CLI command window, execute the following command to establish a route from the Azure Digital Twins service (replace RESOURCE_GROUP_NAME, DIGITAL_TWINS_INSTANCE_NAME with your values):
 
@@ -705,7 +677,7 @@ The best way to update device twin information is to base it on live data being 
 
     >**Note**: Because we are running the Azure Digital Twins Explorer locally, we are not able to leverage the SignalR hub. Alternatively, you could follow guidance on deploying the Azure Digital Twins Explorer as a cloud service and configure it to receive updates from SignalR. You can find this guidance on the [Azure Digital Twins Explorer repository](https://github.com/Azure-Samples/digital-twins-explorer#advanced).
 
-9. To enable device simulation, we will need to retrieve the IoT Hub connection string.
+6. To enable device simulation, we will need to retrieve the IoT Hub connection string.
 
    - In the [Azure Portal](https://portal.azure.com), open the lab resource group and select the **IoT Hub** resource ({PREFIX}iothub).
 
@@ -717,21 +689,21 @@ The best way to update device twin information is to base it on live data being 
 
         ![The iothubowner blade displays with the Copy button highlighted next to the primary connection string value.](media/iothubowner_primaryconnectionstring.png "iothubowner policy blade")
 
-10. In Visual Studio Code, open the **devicesimulation** folder (`Hands-on lab/Resources/devicesimulation`).
+7. In Visual Studio Code, open the **devicesimulation** folder (`Hands-on lab/Resources/devicesimulation`).
 
-11. Open the **appSettings.json** file, and paste the IoT Hub connection string that you have previously recorded. Save the file.
+8. Open the **appSettings.json** file, and paste the IoT Hub connection string that you have previously recorded. Save the file.
 
-12. Select **View** from the top menu, and select **Terminal** to open a terminal window.
+9. Select **View** from the top menu, and select **Terminal** to open a terminal window.
 
-13. Execute the following command in the terminal window:
+10. Execute the following command in the terminal window:
 
     ```Bash
     dotnet run
     ```
 
-14. This will start the devices simulator program. When prompted, enter the command: **start** and press the **Enter** key. This simulation will register and initialize many IoT devices, then will begin sending updates. By default, this simulation is set to run for 10 minutes.
+11. This will start the devices simulator program. When prompted, enter the command: **start** and press the **Enter** key. This simulation will register and initialize many IoT devices, then will begin sending updates. By default, this simulation is set to run for 10 minutes.
 
-15. Identify a device in the output that you would like to track, and use the Azure Digital Twins Explorer application to query for and view the properties.
+12. Identify a device in the output that you would like to track, and use the Azure Digital Twins Explorer application to query for and view the properties.
 
 ## Exercise 6: Visualizing incoming data with Azure Time Series Insights
 
